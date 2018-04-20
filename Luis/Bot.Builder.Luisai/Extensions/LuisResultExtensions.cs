@@ -8,7 +8,8 @@ namespace Bot.Builder.Luisai.Extensions
     {
         public static bool TryFindEntity(this LuisResult result, string type, out EntityRecommendation luisEntity)
         {
-            luisEntity = result?.Entities?.FirstOrDefault(e => e.Type == type);
+            var entities = result?.Entities?.Where(e => e.Type == type);
+            luisEntity = entities?.FirstOrDefault();
             return luisEntity != null;
         }
 
