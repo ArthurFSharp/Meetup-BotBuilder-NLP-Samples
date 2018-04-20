@@ -7,7 +7,7 @@ namespace RestaurantBot.Dialogs.Forms
     public class OrderForm
     {
         public string Item { get; set; }
-        public int? Count { get; set; }
+        public int Count { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
         public static OrderForm ReadFromLuis(LuisResult luisResult)
@@ -16,12 +16,16 @@ namespace RestaurantBot.Dialogs.Forms
 
             if (luisResult.TryFindEntity("Food", out var foodEntity))
             {
-                form.Item = foodEntity.Entity;
+                form.Item = LuisHelper.ResolveFood(foodEntity);
             }
 
             if (luisResult.TryFindEntity("Count", out var itemCount))
             {
                 form.Count = int.Parse(itemCount.Entity);
+            }
+            else
+            {
+                form.Count = 1;
             }
 
             EntityRecommendation dateTimeEntity;

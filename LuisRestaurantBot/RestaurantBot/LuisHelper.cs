@@ -1,6 +1,7 @@
 ﻿using Microsoft.Bot.Builder.Luis.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RestaurantBot
 {
@@ -25,6 +26,11 @@ namespace RestaurantBot
             }
 
             return DateTime.MinValue;
+        }
+
+        public static string ResolveFood(EntityRecommendation entity)
+        {
+            return (entity.Resolution["values"] as List<object>)[0].ToString();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace RestaurantBot.Dialogs
         {
             var form = OrderForm.ReadFromLuis(result);
 
-            if (string.IsNullOrWhiteSpace(form.Item) || !form.Count.HasValue || !form.DeliveryDate.HasValue)
+            if (string.IsNullOrWhiteSpace(form.Item) || form.Count < 1 || !form.DeliveryDate.HasValue)
             {
                 await context.PostAsync("Des informations sont manquantes");
                 return;

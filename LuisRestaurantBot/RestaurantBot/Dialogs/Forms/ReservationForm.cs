@@ -20,9 +20,10 @@ namespace RestaurantBot.Dialogs.Forms
                 form.RestaurantName = restaurantNameEntity.Entity;
             }
 
-            if (luisResult.TryFindEntity("Count", out var peopleCountEntity))
+            var countEntity = luisResult.Entities.Where(e => e.Type == "builtin.number").Skip(1).FirstOrDefault();
+            if (countEntity != null)
             {
-                form.PeopleCount = int.Parse(peopleCountEntity.Entity);
+                form.PeopleCount = int.Parse(countEntity.Entity);
             }
 
             var reservationDateEntity = luisResult.Entities.Where(e => e.Type == "builtin.datetimeV2.time").Skip(1).FirstOrDefault();
