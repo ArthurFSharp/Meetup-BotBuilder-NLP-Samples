@@ -2,11 +2,11 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BotLuisMeetup.Dialog;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using RestaurantBot.Dialogs;
 
-namespace BotLuisMeetup
+namespace RestaurantBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
@@ -19,7 +19,7 @@ namespace BotLuisMeetup
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new RootDialog());
+                await Conversation.SendAsync(activity, () => new LuisRootDialog());
             }
             else
             {
