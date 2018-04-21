@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Framework.Builder.Witai.Extensions;
+﻿using Microsoft.Bot.Framework.Builder.Witai;
+using Microsoft.Bot.Framework.Builder.Witai.Extensions;
 using Microsoft.Bot.Framework.Builder.Witai.Models;
 using Microsoft.Bot.Framework.Builder.Witai.Parsers;
 using System;
@@ -20,7 +21,7 @@ namespace RestaurantBot.Dialogs.Forms
                 form.Item = foodEntity.Value;
             }
 
-            if (witResult.TryFindEntity("wit/number", out var itemCount))
+            if (witResult.TryFindEntity("number", out var itemCount))
             {
                 form.Count = int.Parse(itemCount.Value);
             }
@@ -28,8 +29,8 @@ namespace RestaurantBot.Dialogs.Forms
             {
                 form.Count = 1;
             }
-            
-            if (witResult.TryFindEntity("wit/datetime", out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
+
+            if (witResult.TryFindEntity(WitBuiltinEntities.DateTime, out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
             {
                 form.DeliveryDate = range.StartDate.DateTime;
             }

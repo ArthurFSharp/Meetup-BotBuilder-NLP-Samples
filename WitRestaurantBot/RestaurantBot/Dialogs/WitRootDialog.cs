@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RestaurantBot.Dialogs
 {
     [Serializable]
-    [WitModel("4644cc35-203b-4ce3-bf6e-acea9403df2d")]
+    [WitModel("FEANTFQTZWMMEM3NXU7QSL2AH7ZRJ62A")]
     public class WitRootDialog : WitDialog<object>
     {
         [WitIntent("")]
@@ -18,7 +18,7 @@ namespace RestaurantBot.Dialogs
         {
             await context.PostAsync("Je n'ai pas compris ce que vous avez dit.");
         }
-        
+
         [WitIntent("Commander")]
         public async Task Commander(IDialogContext context, WitResult result)
         {

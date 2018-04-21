@@ -1,5 +1,6 @@
 ﻿using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Framework.Builder.Witai;
 using Microsoft.Bot.Framework.Builder.Witai.Extensions;
 using Microsoft.Bot.Framework.Builder.Witai.Models;
 using Microsoft.Bot.Framework.Builder.Witai.Parsers;
@@ -22,8 +23,8 @@ namespace RestaurantBot.Dialogs.Forms
             {
                 form.RestaurantName = restaurantNameEntity.Value;
             }
-            
-            if (witResult.TryFindEntities("wit/number", out var countEntities))
+
+            if (witResult.TryFindEntities("number", out var countEntities))
             {
                 var countEntity = countEntities.Skip(1).FirstOrDefault();
                 if (countEntity != null)
@@ -32,7 +33,7 @@ namespace RestaurantBot.Dialogs.Forms
                 }
             }
 
-            if (witResult.TryFindEntity("wit/datetime", out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
+            if (witResult.TryFindEntity(WitBuiltinEntities.DateTime, out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
             {
                 form.ReservationDate = range.StartDate.DateTime;
             }
