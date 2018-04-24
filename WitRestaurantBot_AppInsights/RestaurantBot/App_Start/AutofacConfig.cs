@@ -3,6 +3,7 @@ using Autofac.Integration.WebApi;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Bot.Builder.Dialogs;
+using RestaurantBot.Telemetry;
 using System.Configuration;
 using System.Web.Http;
 
@@ -25,6 +26,7 @@ namespace RestaurantBot
         private static void RegisterAppInsights(ContainerBuilder builder)
         {
             builder.Register(c => new TelemetryClient(new TelemetryConfiguration(ConfigurationManager.AppSettings["APPINSIGHTS_INSTRUMENTATIONKEY"])));
+            builder.RegisterType<TelemetryService>().As<ITelemetryService>();
         }
     }
 }

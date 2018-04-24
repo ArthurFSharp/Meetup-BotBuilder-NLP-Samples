@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Framework.Builder.Witai;
 using Microsoft.Bot.Framework.Builder.Witai.Dialogs;
+using Microsoft.Bot.Framework.Builder.Witai.Extensions;
 using Microsoft.Bot.Framework.Builder.Witai.Models;
 using RestaurantBot.Dialogs.Forms;
 using RestaurantBot.Telemetry;
@@ -19,7 +20,8 @@ namespace RestaurantBot.Dialogs
         public async Task None(IDialogContext context, WitResult result)
         {
             var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
-            telemetryService.UnrecognizedIntent(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, 0.0);
+            var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1.0;
+            telemetryService.UnrecognizedIntent(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, confidence);
 
             await context.PostAsync("Je n'ai pas compris ce que vous avez dit.");
         }
@@ -28,7 +30,8 @@ namespace RestaurantBot.Dialogs
         public async Task Commander(IDialogContext context, WitResult result)
         {
             var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
-            telemetryService.OrderAsked(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, 0.0);
+            var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1.0;
+            telemetryService.OrderAsked(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, confidence);
 
             var form = OrderForm.ReadFromWit(result);
 
@@ -46,7 +49,8 @@ namespace RestaurantBot.Dialogs
         public async Task Reserver(IDialogContext context, WitResult result)
         {
             var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
-            telemetryService.ReservationAsked(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, 0.0);
+            var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1;
+            telemetryService.ReservationAsked(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, confidence);
 
             var form = ReservationForm.ReadFromWit(result);
 
