@@ -10,7 +10,7 @@ namespace RestaurantBot.Telemetry
         private const string MessageReceivedEventName = "message_received";
         private const string OrderAskedEventName = "order_asked";
         private const string ReservationAskedEventName = "reservation_asked";
-        private const string UnrecognizedIntentEventName = "unrecognized_intent";
+        private const string UnrecognizedIntentEventName = "not_understood_raised";
 
         private readonly TelemetryClient _telemetryClient;
 
@@ -19,15 +19,23 @@ namespace RestaurantBot.Telemetry
             _telemetryClient = telemetryClient;
         }
 
-        public void OrderAsked(string channel, string userId, string message, double witConfidence)
+        public void OrderAsked(string channel, string userId, string message, double witConfidence, string food, DateTime dateTime)
         {
-            PerformTelemetry(OrderAskedEventName, channel, userId);
+            var param = new Dictionary<string, string>
+            {
+                { "food", food },
+                { "dateTime", dateTime.ToString("yyyy-MM-dd hh:mm:ss.fffffff") }
+            };
+
+            PerformTelemetry(OrderAskedEventName, channel, userId, param);
             MessageReceived(channel, userId, OrderAskedEventName, message, witConfidence);
         }
 
-        public void ReservationAsked(string channel, string userId, string message, double witConfidence)
+        public void ReservationAsked(string channel, string userId, string message, double witConfidence, int peopleCount)
         {
-            PerformTelemetry(ReservationAskedEventName, channel, userId);
+            var param = new Dictionary<string, string> { { "peopleCount", peopleCount.ToString() } };
+
+            PerformTelemetry(ReservationAskedEventName, channel, userId, param);
             MessageReceived(channel, userId, OrderAskedEventName, message, witConfidence);
         }
 
