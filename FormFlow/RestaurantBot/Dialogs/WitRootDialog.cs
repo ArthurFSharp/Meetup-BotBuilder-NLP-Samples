@@ -35,8 +35,7 @@ namespace RestaurantBot.Dialogs
                 return;
             }
 
-            await context.PostAsync($"Vous avez commandé {form.Count}x {form.Item}");
-            await context.PostAsync($"Vous serez livré à partir de {form.DeliveryDate.DateTime.ToString("HH\\hmm")} le {form.DeliveryDate.DateTime.ToString("dd/MM/yyyy")}");
+            await ResumeOrder(context, form);
         }
 
         private async Task ResumeAfterOrderFormCompleted(IDialogContext context, IAwaitable<OrderForm> result)
@@ -44,13 +43,18 @@ namespace RestaurantBot.Dialogs
             try
             {
                 var order = await result;
-                await context.PostAsync($"Vous avez commandé {order.Count}x {order.Item}");
-                await context.PostAsync($"Vous serez livré à partir de {order.DeliveryDate.DateTime.ToString("HH\\hmm")} le {order.DeliveryDate.DateTime.ToString("dd/MM/yyyy")}");
+                await ResumeOrder(context, order);
             }
             catch (FormCanceledException<OrderForm>)
             {
                 await context.PostAsync("Une erreur s'est produite dans le formulaire.");
             }
+        }
+
+        private async Task ResumeOrder(IDialogContext context, OrderForm order)
+        {
+            await context.PostAsync($"Vous avez commandé {order.Count}x {order.Item}");
+            await context.PostAsync($"Vous serez livré à partir de {order.DeliveryDate.DateTime.ToString("HH\\hmm")} le {order.DeliveryDate.DateTime.ToString("dd/MM/yyyy")}");
         }
 
         #endregion
@@ -62,15 +66,15 @@ namespace RestaurantBot.Dialogs
         {
             var form = ReservationForm.ReadFromWit(result);
 
-            if (string.IsNullOrWhiteSpace(form.RestaurantName) || form.PeopleCount == null || form.ReservationDate == null)
+            if (string.IsNullOrWhiteSpace(form.RestaurantName) || form.PeopleCount == 0 || form.ReservationDate == null)
             {
-                var setLeavesForm = new FormDialog<ReservationForm>(form, ReservationForm.BuildForm, FormOptions.PromptInStart);
-                context.Call(setLeavesForm, ResumeAfterReservationFormCompleted);
+                var reservationForm = new FormDialog<ReservationForm>(form, ReservationForm.BuildForm, FormOptions.PromptInStart);
+                context.Call(reservationForm, ResumeAfterReservationFormCompleted);
 
                 return;
             }
 
-            await context.PostAsync($"Je vous ai réservé une table pour {form.PeopleCount} chez {form.RestaurantName} à {form.ReservationDate.DateTime.ToString("HH\\hmm")} le {form.ReservationDate.DateTime.ToString("dd/MM/yyyy")}");
+            await ResumeReservation(context, form);
         }
 
         private async Task ResumeAfterReservationFormCompleted(IDialogContext context, IAwaitable<ReservationForm> result)
@@ -78,12 +82,17 @@ namespace RestaurantBot.Dialogs
             try
             {
                 var reservation = await result;
-                await context.PostAsync($"Je vous ai réservé une table pour {reservation.PeopleCount} chez {reservation.RestaurantName} à {reservation.ReservationDate.DateTime.ToString("HH\\hmm")} le {reservation.ReservationDate.DateTime.ToString("dd/MM/yyyy")}");
+                await ResumeReservation(context, reservation);
             }
-            catch (FormCanceledException<ReservationForm> ex) 
+            catch (FormCanceledException<ReservationForm>) 
             {
                 await context.PostAsync("Une erreur s'est produite dans le formulaire.");
             }
+        }
+
+        private async Task ResumeReservation(IDialogContext context, ReservationForm reservation)
+        {
+            await context.PostAsync($"Je vous ai réservé une table pour {reservation.PeopleCount} chez {reservation.RestaurantName} à {reservation.ReservationDate.DateTime.ToString("HH\\hmm")} le {reservation.ReservationDate.DateTime.ToString("dd/MM/yyyy")}");
         }
 
         #endregion
