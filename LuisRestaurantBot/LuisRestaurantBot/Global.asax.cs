@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
 
-namespace RestaurantBot
+namespace LuisRestaurantBot
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

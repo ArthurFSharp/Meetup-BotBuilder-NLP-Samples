@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantBot", "RestaurantBot\RestaurantBot.csproj", "{86FBC1F2-BF9F-43FD-A9CE-62F53D95367A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuisRestaurantBot", "LuisRestaurantBot\LuisRestaurantBot.csproj", "{65FB30B1-F99D-493B-A911-1ED31A536FD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{86FBC1F2-BF9F-43FD-A9CE-62F53D95367A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86FBC1F2-BF9F-43FD-A9CE-62F53D95367A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86FBC1F2-BF9F-43FD-A9CE-62F53D95367A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86FBC1F2-BF9F-43FD-A9CE-62F53D95367A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65FB30B1-F99D-493B-A911-1ED31A536FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65FB30B1-F99D-493B-A911-1ED31A536FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65FB30B1-F99D-493B-A911-1ED31A536FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65FB30B1-F99D-493B-A911-1ED31A536FD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6335E324-C2C7-4148-8D3C-FC74FBA74AB6}
+		SolutionGuid = {577D0A08-A0EB-4ADE-8878-A738F9A9929E}
 	EndGlobalSection
 EndGlobal
