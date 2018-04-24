@@ -38,7 +38,7 @@ namespace LuisRestaurantBot.Dialogs
 
             var foodAndQuantities = form.Counts.Zip(form.Items, (q, i) => new { Quantity = q, Item = i });
 
-            string resume = String.Join(", ", foodAndQuantities.Select(x => "x" + x.Quantity + " " + x.Item));
+            var resume = String.Join(", ", foodAndQuantities.Select(x => "x" + x.Quantity + " " + x.Item));
 
             await context.PostAsync($"Vous avez choisi : {resume}");
         }
