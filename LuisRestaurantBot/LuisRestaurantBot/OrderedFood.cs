@@ -1,4 +1,4 @@
-﻿namespace LuisRestaurantBot.Dialogs
+﻿namespace LuisRestaurantBot
 {
     public class OrderedFood
     {
