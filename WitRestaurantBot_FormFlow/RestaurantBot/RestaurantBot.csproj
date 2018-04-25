@@ -171,7 +171,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3979</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/WitRestaurantBot</IISUrl>
+          <IISUrl>http://localhost/WitRestaurantBot_FormFlow</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
