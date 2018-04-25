@@ -3,7 +3,6 @@ using Microsoft.Bot.Framework.Builder.Witai.Extensions;
 using Microsoft.Bot.Framework.Builder.Witai.Models;
 using Microsoft.Bot.Framework.Builder.Witai.Parsers;
 using System;
-using System.Linq;
 
 namespace RestaurantBot.Dialogs.Forms
 {
