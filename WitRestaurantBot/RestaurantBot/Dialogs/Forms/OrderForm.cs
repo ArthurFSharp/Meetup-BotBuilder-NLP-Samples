@@ -14,28 +14,7 @@ namespace RestaurantBot.Dialogs.Forms
 
         public static OrderForm ReadFromWit(WitResult witResult)
         {
-            var form = new OrderForm();
-
-            if (witResult.TryFindEntity("food", out var foodEntity))
-            {
-                form.Item = foodEntity.Value;
-            }
-
-            if (witResult.TryFindEntity("number", out var itemCount))
-            {
-                form.Count = int.Parse(itemCount.Value);
-            }
-            else
-            {
-                form.Count = 1;
-            }
-
-            if (witResult.TryFindEntity(WitBuiltinEntities.DateTime, out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
-            {
-                form.DeliveryDate = range.StartDate.DateTime;
-            }
-
-            return form;
+            throw new NotImplementedException();
         }
     }
 }
