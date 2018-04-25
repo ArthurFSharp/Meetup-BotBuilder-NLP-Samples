@@ -1,6 +1,4 @@
-﻿using Microsoft.Bot.Builder.Luis;
-using Microsoft.Bot.Builder.Luis.Models;
-using Microsoft.Bot.Framework.Builder.Witai;
+﻿using Microsoft.Bot.Framework.Builder.Witai;
 using Microsoft.Bot.Framework.Builder.Witai.Extensions;
 using Microsoft.Bot.Framework.Builder.Witai.Models;
 using Microsoft.Bot.Framework.Builder.Witai.Parsers;
