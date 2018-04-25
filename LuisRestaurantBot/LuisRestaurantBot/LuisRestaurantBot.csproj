@@ -115,6 +115,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\Forms\OrderForm.cs" />
     <Compile Include="Dialogs\LuisRootDialog.cs" />
+    <Compile Include="Dialogs\OrderedFood.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

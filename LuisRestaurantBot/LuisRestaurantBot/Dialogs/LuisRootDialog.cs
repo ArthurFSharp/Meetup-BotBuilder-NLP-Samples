@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using LuisRestaurantBot.Dialogs.Forms;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
-using LuisRestaurantBot.Dialogs.Forms;
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LuisRestaurantBot.Dialogs
 {
@@ -26,20 +25,18 @@ namespace LuisRestaurantBot.Dialogs
         {
             var form = OrderForm.ReadFromLuis(result);
 
-            var commands = new List<KeyValuePair<int, string>>();
-            
-            foreach (var count in form.Counts)
-            {
-                foreach (var item in form.Items)
-                {
-                    commands.Add(new KeyValuePair<int, string>(count, item));
-                }
-            }
+            var commands = GetOrderedFoods(form);
+            await PrintOrderedFoods(context, commands);
+        }
 
-            var foodAndQuantities = form.Counts.Zip(form.Items, (q, i) => new { Quantity = q, Item = i });
+        private IEnumerable<OrderedFood> GetOrderedFoods(OrderForm form)
+        {
+            return form.Counts.Zip(form.Items, (q, i) => new OrderedFood(i, q));
+        }
 
-            var resume = String.Join(", ", foodAndQuantities.Select(x => "x" + x.Quantity + " " + x.Item));
-
+        private async Task PrintOrderedFoods(IDialogContext context, IEnumerable<OrderedFood> orderedFoods)
+        {
+            var resume = orderedFoods.Select(x => $"x{x.Quantity} {x.Name}").Aggregate((a, b) => $"{a},{b}");
             await context.PostAsync($"Vous avez choisi : {resume}");
         }
     }
