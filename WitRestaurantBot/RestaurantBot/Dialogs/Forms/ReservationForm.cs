@@ -22,13 +22,9 @@ namespace RestaurantBot.Dialogs.Forms
                 form.RestaurantName = restaurantNameEntity.Value;
             }
 
-            if (witResult.TryFindEntities("number", out var countEntities))
+            if (witResult.TryFindEntity("people_count", out var countEntity))
             {
-                var countEntity = countEntities.Skip(1).FirstOrDefault();
-                if (countEntity != null)
-                {
-                    form.PeopleCount = int.Parse(countEntity.Value);
-                }
+                form.PeopleCount = int.Parse(countEntity.Value);
             }
 
             if (witResult.TryFindEntity(WitBuiltinEntities.DateTime, out var dateTimeEntity) && DateTimeParser.TryParse(dateTimeEntity, out var range))
