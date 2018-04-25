@@ -1,5 +1,4 @@
-﻿using Microsoft.Bot.Builder.Luis;
-using Microsoft.Bot.Builder.Luis.Models;
+﻿using Microsoft.Bot.Builder.Luis.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +22,7 @@ namespace LuisRestaurantBot.Dialogs.Forms
             {
                 foreach (var item in foods)
                 {
-                    form.Items.Add(item.Entity);
+                    form.Items.Add(LuisHelper.ResolveFood(item));
                 }
             }
 
