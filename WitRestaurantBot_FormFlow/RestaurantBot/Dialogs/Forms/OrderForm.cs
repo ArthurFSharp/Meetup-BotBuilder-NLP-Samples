@@ -53,21 +53,25 @@ namespace RestaurantBot.Dialogs.Forms
             return form;
         }
 
-        public static IForm<OrderForm> BuildForm()
-        {
-            var form = new FormBuilder<OrderForm>()
-                .Field(nameof(OrderForm.Item), active: HasNotFoundFoodItem)
-                .Field(nameof(OrderForm.Count), active: HasNotFoundQuantity)
-                .DateTimeRangeField(nameof(OrderForm.DeliveryDate), active: HasNotFoundDate, validate: DateTimeRangeWithPrecisionValidator.ValidateDate)
-                .Build();
+        #region Snippets
 
-            return form;
-        }
+        //public static IForm<OrderForm> BuildForm()
+        //{
+        //    var form = new FormBuilder<OrderForm>()
+        //        .Field(nameof(OrderForm.Item), active: HasNotFoundFoodItem)
+        //        .Field(nameof(OrderForm.Count), active: HasNotFoundQuantity)
+        //        .DateTimeRangeField(nameof(OrderForm.DeliveryDate), active: HasNotFoundDate, validate: DateTimeRangeWithPrecisionValidator.ValidateDate)
+        //        .Build();
 
-        private static bool HasNotFoundFoodItem(OrderForm form) => string.IsNullOrEmpty(form.Item);
+        //    return form;
+        //}
 
-        private static bool HasNotFoundQuantity(OrderForm form) => form.Count == 0;
+        //private static bool HasNotFoundFoodItem(OrderForm form) => string.IsNullOrEmpty(form.Item);
 
-        private static bool HasNotFoundDate(OrderForm form) => form.DeliveryDate == null;
+        //private static bool HasNotFoundQuantity(OrderForm form) => form.Count == 0;
+
+        //private static bool HasNotFoundDate(OrderForm form) => form.DeliveryDate == null;
+
+        #endregion
     }
 }

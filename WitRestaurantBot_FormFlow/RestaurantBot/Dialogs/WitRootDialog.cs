@@ -29,26 +29,11 @@ namespace RestaurantBot.Dialogs
 
             if (string.IsNullOrWhiteSpace(form.Item) || form.Count < 1 || form.DeliveryDate == null)
             {
-                var setLeavesForm = new FormDialog<OrderForm>(form, OrderForm.BuildForm, FormOptions.PromptInStart);
-                context.Call(setLeavesForm, ResumeAfterOrderFormCompleted);
-
+                // TODO FormFlow
                 return;
             }
 
             await ResumeOrder(context, form);
-        }
-
-        private async Task ResumeAfterOrderFormCompleted(IDialogContext context, IAwaitable<OrderForm> result)
-        {
-            try
-            {
-                var order = await result;
-                await ResumeOrder(context, order);
-            }
-            catch (FormCanceledException<OrderForm>)
-            {
-                await context.PostAsync("Une erreur s'est produite dans le formulaire.");
-            }
         }
 
         private async Task ResumeOrder(IDialogContext context, OrderForm order)
@@ -95,6 +80,24 @@ namespace RestaurantBot.Dialogs
             await context.PostAsync($"Je vous ai réservé une table pour {reservation.PeopleCount} chez {reservation.RestaurantName} à {reservation.ReservationDate.DateTime.ToString("HH\\hmm")} le {reservation.ReservationDate.DateTime.ToString("dd/MM/yyyy")}");
         }
 
+        #endregion
+
+        #region Snippets
+        //var setLeavesForm = new FormDialog<OrderForm>(form, OrderForm.BuildForm, FormOptions.PromptInStart);
+        //context.Call(setLeavesForm, ResumeAfterOrderFormCompleted);
+
+        //private async Task ResumeAfterOrderFormCompleted(IDialogContext context, IAwaitable<OrderForm> result)
+        //{
+        //    try
+        //    {
+        //        var order = await result;
+        //        await ResumeOrder(context, order);
+        //    }
+        //    catch (FormCanceledException<OrderForm>)
+        //    {
+        //        await context.PostAsync("Une erreur s'est produite dans le formulaire.");
+        //    }
+        //}
         #endregion
     }
 }
