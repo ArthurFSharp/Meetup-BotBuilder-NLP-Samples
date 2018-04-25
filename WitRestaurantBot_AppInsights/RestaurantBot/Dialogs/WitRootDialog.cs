@@ -19,10 +19,7 @@ namespace RestaurantBot.Dialogs
         [WitIntent("None")]
         public async Task None(IDialogContext context, WitResult result)
         {
-            var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
-            var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1.0;
-            telemetryService.UnrecognizedIntent(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, confidence);
-
+            UnrecognizedIntentTelemety(context, result);
             await context.PostAsync("Je n'ai pas compris ce que vous avez dit.");
         }
 
@@ -37,7 +34,7 @@ namespace RestaurantBot.Dialogs
                 return;
             }
 
-            OrderAskedTelemetry(context, result, form);
+            // TODO : Telemetry
 
             await context.PostAsync($"Vous avez commandé {form.Count}x {form.Item}");
             await context.PostAsync($"Vous serez livré à partir de {form.DeliveryDate.Value.ToString("HH\\hmm")} le {form.DeliveryDate.Value.ToString("dd/MM/yyyy")}");
@@ -59,18 +56,11 @@ namespace RestaurantBot.Dialogs
             await context.PostAsync($"Je vous ai réservé une table pour {form.PeopleCount.Value} chez {form.RestaurantName} à {form.ReservationDate.Value.ToString("HH\\hmm")} le {form.ReservationDate.Value.ToString("dd/MM/yyyy")}");
         }
 
-        private void OrderAskedTelemetry(IDialogContext context, WitResult result, OrderForm form)
+        private void UnrecognizedIntentTelemety(IDialogContext context, WitResult result)
         {
             var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
-
             var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1.0;
-
-            telemetryService.OrderAsked(context.Activity.ChannelId,
-                                        context.Activity.From.Id,
-                                        context.Activity.AsMessageActivity().Text,
-                                        confidence,
-                                        form.Item,
-                                        form.DeliveryDate.Value);
+            telemetryService.UnrecognizedIntent(context.Activity.ChannelId, context.Activity.From.Id, context.Activity.AsMessageActivity().Text, confidence);
         }
 
         private void ReservationAskedTelemetry(IDialogContext context, WitResult result, ReservationForm form)
@@ -85,5 +75,25 @@ namespace RestaurantBot.Dialogs
                                               confidence,
                                               form.PeopleCount.Value);
         }
+
+        #region Snippets
+
+        // OrderAskedTelemetry(context, result, form);
+
+        //private void OrderAskedTelemetry(IDialogContext context, WitResult result, OrderForm form)
+        //{
+        //    var telemetryService = Conversation.Container.Resolve<ITelemetryService>();
+
+        //    var confidence = result.TryFindEntity("intent", out var intentEntity) ? intentEntity.Confidence : -1.0;
+
+        //    telemetryService.OrderAsked(context.Activity.ChannelId,
+        //                                context.Activity.From.Id,
+        //                                context.Activity.AsMessageActivity().Text,
+        //                                confidence,
+        //                                form.Item,
+        //                                form.DeliveryDate.Value);
+        //}
+
+        #endregion
     }
 }
